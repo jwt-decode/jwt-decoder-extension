@@ -1,0 +1,26 @@
+{
+  "name": "__MSG_extName__",
+  "short_name": "JWT",
+  "version": "1.0",
+  "description": "__MSG_extDesc__",
+  "icons": {
+    "128": "icon128.png",
+    "48": "icon48.png",
+    "32": "icon32.png",
+    "16": "icon16.png"
+  },
+  "action": {
+    "default_icon": "icon16.png"
+  },
+  "devtools_page": "devtools.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "storage"
+  ],
+  "incognito": "split",
+  "default_locale": "en",
+  "manifest_version": 3
+}

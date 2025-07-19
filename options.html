@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="options.css">
+  <title id="i18n-title"></title>
+</head>
+<body>
+  <table>
+    <tr>
+      <td>
+        <label for="header_name" id="i18n-header-name-label"></label>
+      </td>
+      <td>
+        <input type="text" id="header_name">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="header_prefix" id="i18n-header-prefix-label"></label>
+      </td>
+      <td>
+        <input type="text" id="header_prefix"><br>
+        <span id="i18n-header-prefix-hint"></span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="checkbox" id="copy_prefix">
+      </td>
+      <td>
+        <label for="copy_prefix" id="i18n-copy-prefix-label"></label>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <input type="checkbox" id="wrap_claim_names">
+      </td>
+      <td>
+        <label for="wrap_claim_names" id="i18n-wrap-claim-names-label"></label>
+      </td>
+    </tr>
+  </table>
+
+  <div id="status"></div>
+  <button id="i18n-save" type="button"></button>
+  <button id="i18n-reset" type="button"></button>
+
+  <script src="options.js"></script>
+</body>
+</html>

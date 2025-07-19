@@ -1,0 +1,41 @@
+{
+    "extName": {
+        "message": "JWT Decoder"
+    },
+    "extDesc": {
+        "message": "Use Jwt Decoder if you don’t know how to decode JWT. Fast data decoding lets you check JSON Web Tokens. Parse JWT claims easily."
+    },
+    "optionsTitle": {
+        "message": "JWT Decoder Options"
+    },
+    "headerNameLabel": {
+        "message": "HTTP Header Name:"
+    },
+    "headerPrefixLabel": {
+        "message": "Prefix:"
+    },
+    "headerPrefixHint": {
+        "message": "(Separate multiple values with commas.)"
+    },
+    "copyPrefixLabel": {
+        "message": "Copy prefix to clipboard"
+    },
+    "wrapClaimNamesLabel": {
+        "message": "Wrap long claim names"
+    },
+    "saveButton": {
+        "message": "Save"
+    },
+    "resetButton": {
+        "message": "Reset"
+    },
+    "bearerTokenExtracted": {
+        "message": "Bearer token extracted from request to {url} at "
+    },
+    "copyTokenButton": {
+        "message": "Copy the JWT to clipboard"
+    },
+    "waitingForRequest": {
+        "message": "Waiting for request with <b>{header}</b>: <b>{prefix}</b> [token]<br>(Go to <b>Extensions > {extName} > Options</b> to customize)"
+    }
+}
