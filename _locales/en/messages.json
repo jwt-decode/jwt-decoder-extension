@@ -30,12 +30,12 @@
         "message": "Reset"
     },
     "bearerTokenExtracted": {
-        "message": "Bearer token extracted from request to {url} at "
+        "message": "Bearer token extracted from request to $1 at "
     },
     "copyTokenButton": {
         "message": "Copy the JWT to clipboard"
     },
     "waitingForRequest": {
-        "message": "Waiting for request with <b>{header}</b>: <b>{prefix}</b> [token]<br>(Go to <b>Extensions > {extName} > Options</b> to customize)"
+        "message": "Waiting for request with <b>$1</b>: <b>$2</b> [token]<br>(Go to <b>Extensions > $3 > Options</b> to customize)"
     }
 }
