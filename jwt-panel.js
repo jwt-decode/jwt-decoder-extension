@@ -44,44 +44,40 @@ function isObject(obj) {
 
 const ts_claims = ["exp","iat","nbf"];
 
-function renderClaims(claims) {
-  var table = document.createElement("table");
-  for(var c in claims) {
-    var row = document.createElement("tr");
-    var td1 = document.createElement("td");
-    td1.appendChild(document.createTextNode(Encoder.htmlEncode(String(c))));
-    td1.className = options.wrap_claim_names ? "wrap-anywhere" : "wrap-words";
-    row.appendChild(td1);
-    var td2 = document.createElement("td");
-    if(isObject(claims[c])) {
-      td2.appendChild(renderClaims(claims[c]));
-    } else {
-      td2.appendChild(document.createTextNode(Encoder.htmlEncode(String(claims[c]))));
-      if(ts_claims.includes(c)) {
-        var ts = document.createElement("span");
-        ts.className = "ts";
-        var d = new Date(claims[c]*1000);
-        ts.appendChild(document.createTextNode(d.toLocaleString()));
-        td2.appendChild(ts);
-      }
-    }
-    row.appendChild(td2);
-    table.appendChild(row);
-  }
-  return table;
-}
+// function renderClaims(claims) {
+//   var table = document.createElement("table");
+//   for(var c in claims) {
+//     var row = document.createElement("tr");
+//     var td1 = document.createElement("td");
+//     td1.appendChild(document.createTextNode(Encoder.htmlEncode(String(c))));
+//     td1.className = options.wrap_claim_names ? "wrap-anywhere" : "wrap-words";
+//     row.appendChild(td1);
+//     var td2 = document.createElement("td");
+//     if(isObject(claims[c])) {
+//       td2.appendChild(renderClaims(claims[c]));
+//     } else {
+//       td2.appendChild(document.createTextNode(Encoder.htmlEncode(String(claims[c]))));
+//       if(ts_claims.includes(c)) {
+//         var ts = document.createElement("span");
+//         ts.className = "ts";
+//         var d = new Date(claims[c]*1000);
+//         ts.appendChild(document.createTextNode(d.toLocaleString()));
+//         td2.appendChild(ts);
+//       }
+//     }
+//     row.appendChild(td2);
+//     table.appendChild(row);
+//   }
+//   return table;
+// }
 
 function render(header, claims, url, time) {
 
-  var divHeader = document.getElementById("header");
-  var dlHeader = renderClaims(header);
-  divHeader.innerHTML = "";
-  divHeader.appendChild(dlHeader);
+  var preHeader = document.getElementById("header-json");
+  preHeader.textContent = JSON.stringify(header, null, 2);
 
-  var div = document.getElementById("claims");
-  var dl = renderClaims(claims);
-  div.innerHTML = "";
-  div.appendChild(dl);
+  var prePayload = document.getElementById("payload-json");
+  prePayload.textContent = JSON.stringify(claims, null, 2);
 
   var caption = document.getElementById("caption");
   // Internationalized caption
