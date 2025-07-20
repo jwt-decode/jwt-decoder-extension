@@ -37,5 +37,11 @@
     },
     "waitingForRequest": {
         "message": "Waiting for request with <b>$1</b>: <b>$2</b> [token]<br>(Go to <b>Extensions > $3 > Options</b> to customize)"
+    },
+    "decodedHeaderLabel":{
+        "message": "DECODED HEADER"
+    },
+    "decodedPayloadLabel":{
+        "message": "DECODED PAYLOAD"
     }
 }

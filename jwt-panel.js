@@ -27,11 +27,11 @@ function setOptions(o) {
   );
 }
 
-function bearer_token(h) {
-  if(h && h.name && h.name.toLowerCase() == options.header_name && h.value) {
-    var p = options.header_prefix.find( s => h.value.startsWith(s) );
+function bearer_token(header) {
+  if(header && header.name && header.name.toLowerCase() == options.header_name && header.value) {
+    var p = options.header_prefix.find( s => header.value.startsWith(s) );
     if(p) {
-      return { prefix:p , tok:h.value.substring(p.length) };
+      return { prefix:p , tok:header.value.substring(p.length) };
     }
   }
   return null;
@@ -83,28 +83,12 @@ function updateCopyButton(p,tok) {
 
 // Taken from: https://stackoverflow.com/a/18455088/1823175
 function copyTextToClipboard(text) {
-  //Create a textbox field where we can insert text to.
   var copyFrom = document.createElement("textarea");
-
-  //Set the text content to be the text you wished to copy.
   copyFrom.textContent = text;
-
-  //Append the textbox field into the body as a child.
-  //"execCommand()" only works when there exists selected text, and the text is inside
-  //document.body (meaning the text is part of a valid rendered HTML element).
   document.body.appendChild(copyFrom);
-
-  //Select all the text!
   copyFrom.select();
-
-  //Execute command
   document.execCommand('copy');
-
-  //(Optional) De-select the text using blur().
   copyFrom.blur();
-
-  //Remove the textbox field from the document.body, so no other JavaScript nor
-  //other elements can get access to this.
   document.body.removeChild(copyFrom);
 }
 
@@ -129,6 +113,8 @@ function onRequestFinished(request) {
 
 function i18n_messages(){
   document.getElementById('i18n-copy-token').textContent = chrome.i18n.getMessage("copyTokenButton");
+  document.getElementById('i18n-decoded-header-label').textContent=chrome.i18n.getMessage('decodedHeaderLabel');
+  document.getElementById('i18n-decoded-payload-label').textContent=chrome.i18n.getMessage('decodedPayloadLabel');
 }
 
 document.addEventListener('DOMContentLoaded', i18n_messages);
