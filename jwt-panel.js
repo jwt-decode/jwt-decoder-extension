@@ -44,13 +44,23 @@ function isObject(obj) {
 
 const ts_claims = ["exp","iat","nbf"];
 
+function syntaxHighlight(json) {
+  if (typeof json != 'string') {
+    json = JSON.stringify(json, undefined, 2);
+  }
+  json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return json.replace(/(\"(.*?)\")(:)/g, function(match, p1, p2, p3) {
+    return '<span class="json-key">' + p1 + '</span>' + p3;
+  });
+}
+
 function render(header, claims, url, time) {
 
   var preHeader = document.getElementById("header-json");
-  preHeader.textContent = JSON.stringify(header, null, 2);
+  preHeader.innerHTML = syntaxHighlight(header);
 
   var prePayload = document.getElementById("payload-json");
-  prePayload.textContent = JSON.stringify(claims, null, 2);
+  prePayload.innerHTML = syntaxHighlight(claims);
 
   var reqCaptured = document.getElementById("request-captured");
   var reqUrl = document.getElementById("request-url");
