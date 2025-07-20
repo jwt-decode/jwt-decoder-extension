@@ -56,6 +56,6 @@ function i18n_messages(){
 
 document.addEventListener('DOMContentLoaded', restore_options);
 document.addEventListener('DOMContentLoaded', i18n_messages);
-document.getElementById('save').addEventListener('click', save_options);
-document.getElementById('reset').addEventListener('click', reset_options);
+document.getElementById('i18n-save').addEventListener('click', save_options);
+document.getElementById('i18n-reset').addEventListener('click', reset_options);
 

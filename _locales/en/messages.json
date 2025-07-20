@@ -6,7 +6,8 @@
         "message": "Use Jwt Decoder if you don’t know how to decode JWT. Fast data decoding lets you check JSON Web Tokens. Parse JWT claims easily."
     },
     "optionsTitle": {
-        "message": "JWT Decoder Options"
+        "message": "JWT Decoder Options",
+        "description": "Label for opions tab"
     },
     "headerNameLabel": {
         "message": "HTTP Header Name:"
