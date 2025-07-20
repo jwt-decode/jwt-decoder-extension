@@ -5,7 +5,14 @@
   <script src="jwt-panel.js"></script>
 </head>
 <body>
-<div id="caption"></div>
+  <div id="request-info" class="card" >
+    <div id="waiting-for-request"></div>
+    <div id="request-captured" display: none;>
+      <div><span class="info-label">Request URL:</span> <span id="request-url" class="info-url"></span></div>
+      <div><span class="info-label">Request Time:</span> <span id="request-time" class="ts"></span></div>
+    </div>
+    
+  </div>
 <div>
   <button id="i18n-copy-token" disabled></button>
 </div>

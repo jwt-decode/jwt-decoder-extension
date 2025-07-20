@@ -61,14 +61,15 @@ legend {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   padding: 1em;
-  margin-bottom: 1.5em;
+  margin-bottom: 0.5em;
   border: 1px solid #e0e0e0;
 }
 
 .section-title {
   font-weight: bold;
   font-size: 1.1em;
-  margin: 2em 0 0.5em 0;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
   letter-spacing: 0.5px;
 }
 
@@ -106,7 +107,7 @@ button#i18n-copy-token {
   box-shadow: 0 2px 6px rgba(25, 118, 210, 0.15);
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
-  margin: 2em 0 0;
+  margin-top: 2em;
 }
 
 button#i18n-copy-token:disabled {
@@ -119,4 +120,18 @@ button#i18n-copy-token:disabled {
 button#i18n-copy-token:hover:enabled {
   background-color: #1565c0;
   box-shadow: 0 4px 12px rgba(25, 118, 210, 0.25);
+}
+
+.info-label {
+  font-weight: bold;
+  color: #1976d2;
+  margin-right: 0.5em;
+}
+.info-url {
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+  background: #f5f5f5;
+  padding: 0.1em 0.3em;
+  border-radius: 4px;
+  color: #1565c0;
+  word-break: break-all;
 }

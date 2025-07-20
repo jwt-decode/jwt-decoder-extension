@@ -15,9 +15,9 @@ function setOptions(o) {
       options.header_prefix[i] += ' ';
     }
   }
-  var caption = document.getElementById("caption");
+  var waitingForRequest = document.getElementById("waiting-for-request");
   var p = options.header_prefix.length>1 ? '{'+options.header_prefix.join()+"}" : options.header_prefix[0];
-  caption.innerHTML = chrome.i18n.getMessage(
+  waitingForRequest.innerHTML = chrome.i18n.getMessage(
     "waitingForRequest",
     [
       Encoder.htmlEncode(o.header_name),
@@ -44,33 +44,6 @@ function isObject(obj) {
 
 const ts_claims = ["exp","iat","nbf"];
 
-// function renderClaims(claims) {
-//   var table = document.createElement("table");
-//   for(var c in claims) {
-//     var row = document.createElement("tr");
-//     var td1 = document.createElement("td");
-//     td1.appendChild(document.createTextNode(Encoder.htmlEncode(String(c))));
-//     td1.className = options.wrap_claim_names ? "wrap-anywhere" : "wrap-words";
-//     row.appendChild(td1);
-//     var td2 = document.createElement("td");
-//     if(isObject(claims[c])) {
-//       td2.appendChild(renderClaims(claims[c]));
-//     } else {
-//       td2.appendChild(document.createTextNode(Encoder.htmlEncode(String(claims[c]))));
-//       if(ts_claims.includes(c)) {
-//         var ts = document.createElement("span");
-//         ts.className = "ts";
-//         var d = new Date(claims[c]*1000);
-//         ts.appendChild(document.createTextNode(d.toLocaleString()));
-//         td2.appendChild(ts);
-//       }
-//     }
-//     row.appendChild(td2);
-//     table.appendChild(row);
-//   }
-//   return table;
-// }
-
 function render(header, claims, url, time) {
 
   var preHeader = document.getElementById("header-json");
@@ -79,13 +52,17 @@ function render(header, claims, url, time) {
   var prePayload = document.getElementById("payload-json");
   prePayload.textContent = JSON.stringify(claims, null, 2);
 
-  var caption = document.getElementById("caption");
-  // Internationalized caption
-  caption.innerHTML = chrome.i18n.getMessage("bearerTokenExtracted",[Encoder.htmlEncode(String(url))]);
-  var ts = document.createElement("span");
-  ts.className = "ts";
-  ts.appendChild(document.createTextNode(Encoder.htmlEncode(String(time))));
-  caption.appendChild(ts);
+  var reqCaptured = document.getElementById("request-captured");
+  var reqUrl = document.getElementById("request-url");
+  var reqTime = document.getElementById("request-time");
+  if (reqCaptured && reqUrl && reqTime) {
+    reqUrl.textContent = url;
+    reqTime.textContent = time;
+    reqCaptured.style.display = '';
+  }
+
+  var waitingForRequest = document.getElementById("waiting-for-request");
+  if (waitingForRequest) waitingForRequest.style.display = 'none';
 }
 
 function updateCopyButton(p,tok) {
@@ -149,6 +126,12 @@ chrome.devtools.network.onRequestFinished.addListener(onRequestFinished);
 window.onload = function() {
   document.getElementById("i18n-copy-token").onclick = copyToken;
   chrome.storage.local.get(options, setOptions);
+
+  var waitingForRequest = document.getElementById("waiting-for-request");
+  if (waitingForRequest) waitingForRequest.style.display = '';
+  var reqCaptured = document.getElementById("request-captured");
+  if (reqCaptured) reqCaptured.style.display = 'none';
+
 };
 chrome.storage.onChanged.addListener( function(changes, namespace) {
   chrome.storage.local.get(options, setOptions);
