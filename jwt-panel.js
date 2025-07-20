@@ -21,8 +21,7 @@ function setOptions(o) {
     "waitingForRequest",
     [
       Encoder.htmlEncode(o.header_name),
-      Encoder.htmlEncode(p),
-      chrome.i18n.getMessage("extName")
+      Encoder.htmlEncode(p)
     ]
   );
 }
