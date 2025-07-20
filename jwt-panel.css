@@ -94,3 +94,29 @@ pre {
   overflow-x: auto;
   margin: 0;
 }
+
+button#i18n-copy-token {
+  background-color: #1976d2; /* A strong blue */
+  color: #fff;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0.7em 1.5em;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(25, 118, 210, 0.15);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  margin: 1em 0;
+}
+
+button#i18n-copy-token:disabled {
+  background-color: #b0b0b0;
+  color: #eee;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+button#i18n-copy-token:hover:enabled {
+  background-color: #1565c0;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.25);
+}
