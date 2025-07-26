@@ -13,4 +13,4 @@ bearer token.
 Running `build.sh` packages the extension for upload to the chrome web store.
 Don't forget to change the version number in `manifest.json` before creating the package.
 
-Icon made by Freepik from www.flaticon.com
+Cursor image made by Pixel perfect

@@ -1,3 +1,3 @@
 chrome.devtools.panels.create(
-  "JWT", "", "jwt-panel.html", function(panel) {}
+  "JWT Decoder", "", "jwt-panel.html", function(panel) {}
   );

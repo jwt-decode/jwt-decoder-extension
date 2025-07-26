@@ -1,0 +1,1 @@
+window.open('https://jwt-decode.github.io/jwt-decoder/', '_blank');
