@@ -94,6 +94,12 @@ button#i18n-copy-token:hover:enabled {
   box-shadow: 0 4px 12px rgba(25, 118, 210, 0.25);
 }
 
+button#i18n-copy-token:active:enabled {
+  background: #003d80;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+  transform: scale(0.97);
+}
+
 .info-label {
   font-weight: bold;
   color: #1976d2;

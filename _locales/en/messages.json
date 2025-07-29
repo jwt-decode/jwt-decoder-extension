@@ -34,7 +34,7 @@
         "message": "Bearer token extracted from request to $1 at "
     },
     "copyTokenButton": {
-        "message": "Copy the JWT to clipboard"
+        "message": "Copy raw JWT"
     },
     "waitingForRequest": {
         "message": "Waiting for request with <b>$1</b>: <b>$2</b> [token]<br>(<b>Header name</b> and <b>Prefix</b> are customizable via extension options)"
