@@ -74,9 +74,19 @@ function render(header, claims, url, time) {
   if (waitingForRequest) waitingForRequest.style.display = 'none';
 }
 
-function updateCopyButton(p,tok) {
+function updateRawTokenCopyButton(p,tok) {
   var b = document.getElementById("i18n-copy-token");
   b.dataset.token = options.copy_prefix ? p+tok : tok;
+  b.disabled = false;
+}
+
+function updateCopyDecodedButtons(header, payload) {
+  var b = document.getElementById("copy-header-button");
+  b.dataset.header = JSON.stringify(header);
+  b.disabled = false;
+
+  b = document.getElementById("copy-payload-button");
+  b.dataset.payload = JSON.stringify(payload);
   b.disabled = false;
 }
 
@@ -96,15 +106,26 @@ function copyToken() {
   copyTextToClipboard(t);
 }
 
+function copyHeader(){
+  var h = this.dataset.header;
+  copyTextToClipboard(h);
+}
+
+function copyPayload(){
+  var p = this.dataset.payload;
+  copyTextToClipboard(p);
+}
+
 function onRequestFinished(request) {
   var h = bearer_token(request.request.headers.find(bearer_token));
   if(!h) return;
   try {
     var parts = h.tok.split('.');
     var header = JSON.parse(atob(parts[0]));
-    var claims = JSON.parse(atob(parts[1]));
-    render(header, claims, request.request.url, request.startedDateTime);
-    updateCopyButton(h.prefix,h.tok);
+    var payload = JSON.parse(atob(parts[1]));
+    render(header, payload, request.request.url, request.startedDateTime);
+    updateRawTokenCopyButton(h.prefix,h.tok);
+    updateCopyDecodedButtons(header, payload);
   } catch (error) {
     // Not a token we can extract and decode
   }
@@ -120,6 +141,8 @@ document.addEventListener('DOMContentLoaded', i18n_messages);
 chrome.devtools.network.onRequestFinished.addListener(onRequestFinished);
 window.onload = function() {
   document.getElementById("i18n-copy-token").onclick = copyToken;
+  document.getElementById("copy-header-button").onclick = copyHeader;
+  document.getElementById("copy-payload-button").onclick = copyPayload;
   chrome.storage.local.get(options, setOptions);
 
   var waitingForRequest = document.getElementById("waiting-for-request");
