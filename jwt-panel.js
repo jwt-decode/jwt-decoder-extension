@@ -72,7 +72,7 @@ function render(header, claims, url, time) {
 
   var waitingForRequest = document.getElementById("waiting-for-request");
   if (waitingForRequest) waitingForRequest.style.display = 'none';
-}
+  }
 
 function updateRawTokenCopyButton(p,tok) {
   var b = document.getElementById("i18n-copy-token");
@@ -135,6 +135,7 @@ function i18n_messages(){
   document.getElementById('i18n-copy-token').textContent = chrome.i18n.getMessage("copyTokenButton");
   document.getElementById('i18n-decoded-header-label').textContent=chrome.i18n.getMessage('decodedHeaderLabel');
   document.getElementById('i18n-decoded-payload-label').textContent=chrome.i18n.getMessage('decodedPayloadLabel');
+  document.getElementById('token-captured').innerHTML=chrome.i18n.getMessage('tokenCaptured');
 }
 
 document.addEventListener('DOMContentLoaded', i18n_messages);

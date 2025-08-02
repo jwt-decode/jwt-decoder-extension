@@ -7,6 +7,15 @@
   border: 1px solid #e0e0e0;
 }
 
+.waiting-for-request {
+  background-color: #fffbe6; /* light yellow */
+  border: 1px solid #ffe58f;
+  padding: 10px;
+  border-radius: 6px;
+  /* font-weight: bold; */
+  color: #d48806;
+}
+
 .section-title {
   font-weight: bold;
   font-size: 1.1em;
