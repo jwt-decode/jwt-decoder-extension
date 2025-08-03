@@ -74,11 +74,11 @@ function render(header, claims, url, time) {
   if (waitingForRequest) waitingForRequest.style.display = 'none';
   }
 
-function updateRawTokenCopyButton(p,tok) {
-  var b = document.getElementById("i18n-copy-token");
-  b.dataset.token = options.copy_prefix ? p+tok : tok;
-  b.disabled = false;
-}
+// function updateRawTokenCopyButton(p,tok) {
+//   var b = document.getElementById("i18n-copy-token");
+//   b.dataset.token = options.copy_prefix ? p+tok : tok;
+//   b.disabled = false;
+// }
 
 function updateCopyDecodedButtons(header, payload) {
   var b = document.getElementById("copy-header-button");
@@ -123,7 +123,25 @@ function onRequestFinished(request) {
     var parts = h.tok.split('.');
     var header = JSON.parse(atob(parts[0]));
     var payload = JSON.parse(atob(parts[1]));
-    render(header, payload, request.request.url, request.startedDateTime);
+    
+    const tokenInput = document.getElementById('token-input');
+    if (tokenInput) {
+      const event = new InputEvent('input', {
+        bubbles: true, // Allows the event to bubble up the DOM tree
+        cancelable: true, // Allows the event to be canceled
+        inputType: 'insertText', // Describes the type of input change
+        data: "" // The characters inserted
+    });
+
+    tokenInput.dataset.requestUrl = request.request.url;
+    tokenInput.dataset.reqTime =request.startedDateTime;
+    tokenInput.value = h.tok;
+    tokenInput.dispatchEvent(event);
+    
+      // tokenInput.classList.remove('error', 'success');
+    }
+    
+    // render(header, payload, request.request.url, request.startedDateTime);
     updateRawTokenCopyButton(h.prefix,h.tok);
     updateCopyDecodedButtons(header, payload);
   } catch (error) {
@@ -132,18 +150,136 @@ function onRequestFinished(request) {
 }
 
 function i18n_messages(){
-  document.getElementById('i18n-copy-token').textContent = chrome.i18n.getMessage("copyTokenButton");
+  // document.getElementById('i18n-copy-token').textContent = chrome.i18n.getMessage("copyTokenButton");
   document.getElementById('i18n-decoded-header-label').textContent=chrome.i18n.getMessage('decodedHeaderLabel');
   document.getElementById('i18n-decoded-payload-label').textContent=chrome.i18n.getMessage('decodedPayloadLabel');
   document.getElementById('token-captured').innerHTML=chrome.i18n.getMessage('tokenCaptured');
 }
 
+// JWT Token validation and decoding functions
+function validateJWTToken(token) {
+  if (!token || typeof token !== 'string') {
+    return { valid: false, error: 'Invalid token format' };
+  }
+  
+  const trimmedToken = token.trim();
+  if (trimmedToken.length === 0) {
+    return { valid: false, error: 'Token cannot be empty' };
+  }
+  
+  const parts = trimmedToken.split('.');
+  if (parts.length !== 3) {
+    return { valid: false, error: 'JWT token must have exactly 3 parts separated by dots' };
+  }
+  
+  return { valid: true, token: trimmedToken };
+}
+
+function decodeJWTToken(token) {
+  try {
+    const parts = token.split('.');
+    const header = JSON.parse(atob(parts[0]));
+    const payload = JSON.parse(atob(parts[1]));
+    return { success: true, header: header, payload: payload };
+  } catch (error) {
+    return { success: false, error: 'Failed to decode JWT token: ' + error.message };
+  }
+}
+
+function handleManualTokenInput() {
+  const tokenInput = document.getElementById('token-input');
+  const token = tokenInput.value;
+  
+  // Clear previous states
+  tokenInput.classList.remove('error', 'success');
+  
+  if (!token.trim()) {
+    // Clear the display if input is empty
+    clearManualDisplay();
+    return;
+  }
+  
+  // Validate token format
+  const validation = validateJWTToken(token);
+  if (!validation.valid) {
+    tokenInput.classList.add('error');
+    showError(validation.error);
+    return;
+  }
+  
+  // Decode the token
+  const result = decodeJWTToken(validation.token);
+  if (!result.success) {
+    tokenInput.classList.add('error');
+    showError(result.error);
+    return;
+  }
+  
+  // Success - display the decoded token
+  tokenInput.classList.add('success');
+  displayManualDecodedToken(result.header, result.payload, validation.token, tokenInput.dataset.requestUrl, tokenInput.dataset.reqTime);
+}
+
+function clearManualDisplay() {
+  const headerJson = document.getElementById('header-json');
+  const payloadJson = document.getElementById('payload-json');
+  
+  headerJson.innerHTML = '';
+  payloadJson.innerHTML = '';
+  
+  // Disable copy buttons
+  document.getElementById('copy-header-button').disabled = true;
+  document.getElementById('copy-payload-button').disabled = true;
+  // document.getElementById('i18n-copy-token').disabled = true;
+  
+  // Hide request captured info
+  const reqCaptured = document.getElementById('request-captured');
+  if (reqCaptured) reqCaptured.style.display = 'none';
+  
+  // Show waiting message
+  const waitingForRequest = document.getElementById('waiting-for-request');
+  if (waitingForRequest) waitingForRequest.style.display = '';
+}
+
+function displayManualDecodedToken(header, payload, token, source, time) {
+  // Hide waiting message
+  const waitingForRequest = document.getElementById('waiting-for-request');
+  if (waitingForRequest) waitingForRequest.style.display = 'none';
+  
+  // Hide request captured info since this is manual input
+  const reqCaptured = document.getElementById('request-captured');
+  if (reqCaptured) reqCaptured.style.display = 'none';
+  
+  // Display decoded token
+  render(header, payload, source, time);
+  
+  // Update copy buttons
+  updateRawTokenCopyButton('', token);
+  updateCopyDecodedButtons(header, payload);
+}
+
+function showError(message) {
+  // Clear the display
+  clearManualDisplay();
+  
+  // You could add a more sophisticated error display here
+  console.error('JWT Decode Error:', message);
+}
+
 document.addEventListener('DOMContentLoaded', i18n_messages);
 chrome.devtools.network.onRequestFinished.addListener(onRequestFinished);
 window.onload = function() {
-  document.getElementById("i18n-copy-token").onclick = copyToken;
+  // document.getElementById("i18n-copy-token").onclick = copyToken;
   document.getElementById("copy-header-button").onclick = copyHeader;
   document.getElementById("copy-payload-button").onclick = copyPayload;
+  
+  // Add event listener for manual token input
+  const tokenInput = document.getElementById("token-input");
+  if (tokenInput) {
+    tokenInput.addEventListener('input', handleManualTokenInput);
+    tokenInput.addEventListener('paste', handleManualTokenInput);
+  }
+  
   chrome.storage.local.get(options, setOptions);
 
   var waitingForRequest = document.getElementById("waiting-for-request");
