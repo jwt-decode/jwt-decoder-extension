@@ -49,8 +49,5 @@
     },
     "decodedPayloadLabel":{
         "message": "DECODED PAYLOAD"
-    },
-    "manualInputLabel":{
-        "message": "MANUAL TOKEN INPUT"
     }
 }

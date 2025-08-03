@@ -13,6 +13,16 @@
   </div>
 <div>
   <!-- <button id="i18n-copy-token" disabled></button> -->
+  <!-- <input type="text" id="token-input" placeholder="Enter JWT token"> -->
+</div>
+<div class="card">
+  <div class="tab-container">
+    <div class="tab">RAW JWT</div>
+    <div>
+      <button id= "clean-input-button" class="tab general-button" disabled>CLEAN</button>
+      <button id= "i18n-copy-token" class="tab general-button" disabled>COPY</button>
+    </div>
+  </div>
   <input type="text" id="token-input" placeholder="Enter JWT token">
 </div>
 <!-- Decoded Header Section -->
@@ -20,7 +30,7 @@
 <div class="card">
   <div class="tab-container">
     <div class="tab">JSON</div>
-    <button id= "copy-header-button" class="tab copy-button" disabled>COPY</button>
+    <button id= "copy-header-button" class="tab general-button" disabled>COPY</button>
   </div>
   <pre id="header-json"></pre>
 </div>
@@ -30,7 +40,7 @@
 <div class="card">
   <div class="tab-container">
     <div class="tab">JSON</div>
-    <button id="copy-payload-button" class="tab copy-button" disabled>COPY</button>
+    <button id="copy-payload-button" class="tab general-button" disabled>COPY</button>
   </div>
   <pre id="payload-json"></pre>
 </div>

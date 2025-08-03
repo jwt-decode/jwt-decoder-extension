@@ -43,23 +43,23 @@
   margin-bottom: 0.5em;
 }
 
-.copy-button {
+.general-button {
   border: 1px solid #292929;
   border-radius: 8px 8px 8px 8px;
 }
 
-.copy-button:not(:disabled):hover {
+.general-button:not(:disabled):hover {
   background: #b1b0b0;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.copy-button:not(:disabled):active {
+.general-button:not(:disabled):active {
   background: #707070;
   box-shadow: 0 1px 3px rgba(0,0,0,0.18);
   transform: scale(0.97);
 }
 
-.copy-button:disabled {
+.general-button:disabled {
   border: none;
   color: rgb(62, 62, 62);
   cursor: not-allowed;
@@ -75,38 +75,6 @@ pre {
   border-radius: 6px;
   overflow-x: auto;
   margin: 0;
-}
-
-button#i18n-copy-token {
-  background-color: #1976d2; /* A strong blue */
-  color: #fff;
-  font-size: 1em;
-  font-weight: bold;
-  padding: 0.7em 1.5em;
-  border: none;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(25, 118, 210, 0.15);
-  cursor: pointer;
-  transition: background 0.2s, box-shadow 0.2s;
-  margin-top: 2em;
-}
-
-button#i18n-copy-token:disabled {
-  background-color: #b0b0b0;
-  color: #eee;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-button#i18n-copy-token:hover:enabled {
-  background-color: #1565c0;
-  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.25);
-}
-
-button#i18n-copy-token:active:enabled {
-  background: #003d80;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.18);
-  transform: scale(0.97);
 }
 
 .info-label {
@@ -129,6 +97,7 @@ button#i18n-copy-token:active:enabled {
 
 /* Manual Token Input Styles */
 #token-input {
+  width: 100%;
   padding: 7px;
   border: 2px solid #e0e0e0;
   border-radius: 6px;
