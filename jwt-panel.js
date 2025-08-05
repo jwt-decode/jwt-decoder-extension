@@ -4,8 +4,7 @@ class JWTConfig {
     this.options = {
       header_name: "authorization",
       header_prefix: ["Bearer "],
-      copy_prefix: false,
-      wrap_claim_names: false
+      copy_prefix: false
     };
   }
 
@@ -15,7 +14,6 @@ class JWTConfig {
       ? newOptions.header_prefix.split(',') 
       : newOptions.header_prefix;
     this.options.copy_prefix = newOptions.copy_prefix;
-    this.options.wrap_claim_names = newOptions.wrap_claim_names;
     
     // Ensure prefixes end with space
     this.options.header_prefix = this.options.header_prefix.map(prefix => {

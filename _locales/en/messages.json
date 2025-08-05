@@ -23,9 +23,6 @@
     "copyPrefixLabel": {
         "message": "Copy prefix to clipboard"
     },
-    "wrapClaimNamesLabel": {
-        "message": "Wrap long claim names"
-    },
     "saveButton": {
         "message": "Save"
     },
