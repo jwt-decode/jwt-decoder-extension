@@ -44,7 +44,6 @@ function i18n_messages(){
   document.getElementById('i18n-header-prefix-label').textContent = chrome.i18n.getMessage("headerPrefixLabel");
   document.getElementById('i18n-header-prefix-hint').textContent = chrome.i18n.getMessage("headerPrefixHint");
   document.getElementById('i18n-copy-prefix-label').textContent = chrome.i18n.getMessage("copyPrefixLabel");
-  document.getElementById('i18n-wrap-claim-names-label').textContent = chrome.i18n.getMessage("wrapClaimNamesLabel");
   document.getElementById('i18n-save').textContent = chrome.i18n.getMessage("saveButton");
   document.getElementById('i18n-reset').textContent = chrome.i18n.getMessage("resetButton");
 }
