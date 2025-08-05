@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "موفر JWT - JWT Decoder"
+    "message": "JWT Decoder"
   },
   "shortDesc": {
     "message": "استخدم موفر JWT إذا كنت لا تعرف كيفية فك تشفير JWT. يتيح لك فك تشفير البيانات بسرعة التحقق من رموز الويب JSON. قم بتحليل مطالبات JWT بسهولة."

@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "ตัวถอดรหัส JWT - JWT Decoder"
+    "message": "JWT Decoder"
   },
   "shortDesc": {
     "message": "ใช้ JWT Decoder หากคุณไม่รู้วิธีถอดรหัส JWT การถอดรหัสข้อมูลอย่างรวดเร็วช่วยให้คุณตรวจสอบ JSON Web Tokens ได้ วิเคราะห์การเคลม JWT ได้อย่างง่ายดาย"
