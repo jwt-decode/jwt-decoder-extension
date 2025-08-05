@@ -134,3 +134,39 @@ pre {
   border-color: #4caf50;
   background-color: #f1f8e9;
 }
+
+.full-stars {
+  text-align: center;
+}
+.full-stars .rating-group {
+  display: inline-flex;
+}
+.full-stars input {
+  position: absolute;
+  left: -9999px;
+}
+.full-stars label {
+  margin: 0;
+  cursor: pointer;
+}
+.full-stars label a svg {
+  margin: 2px;
+  height: 23px;
+  width: 23px;
+  fill: #ff8400;
+  stroke: #ff8400;
+  stroke-width: 10px;
+  transition: fill 0.3s, stroke 0.3s;
+}
+.full-stars input:checked ~ label a svg {
+  fill: #fffbe6;
+  stroke: #ff8400;
+}
+.full-stars .rating-group:hover label a svg {
+  fill: #ff8400;
+  stroke: #ff8400;
+}
+.full-stars .rating-group input:hover ~ label a svg {
+  fill: #fffbe6;
+  stroke: #ff8400;
+}
