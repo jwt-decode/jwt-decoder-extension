@@ -314,8 +314,8 @@ class EventManager {
 
 // Main application controller
 class JWTDecoderApp {
-  constructor() {
-    this.config = new JWTConfig();
+  constructor(config) {
+    this.config = config;
     this.domCache = new DOMCache();
     this.renderer = new UIRenderer(this.domCache);
   }
@@ -456,7 +456,7 @@ class JWTDecoderApp {
 
 // Initialize application
 const jwtConfig = new JWTConfig();
-const app = new JWTDecoderApp();
+const app = new JWTDecoderApp(jwtConfig);
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', () => {
