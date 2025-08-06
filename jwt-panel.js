@@ -31,7 +31,7 @@ class JWTConfig {
     const prefixDisplay = this.options.header_prefix.length > 1 
       ? '{' + this.options.header_prefix.join() + "}" 
       : this.options.header_prefix[0];
-    
+
     waitingForRequest.innerHTML = chrome.i18n.getMessage(
       "waitingForRequest",
       [Encoder.htmlEncode(headerName), Encoder.htmlEncode(prefixDisplay)]
@@ -194,12 +194,12 @@ class UIRenderer {
   }
 
   hideWaitingMessage() {
-    const waitingForRequest = this.dom.getElement("waiting-for-request");
+    const waitingForRequest = this.dom.getElement("waiting-for-request-container");
     if (waitingForRequest) waitingForRequest.style.display = 'none';
   }
 
   showWaitingMessage() {
-    const waitingForRequest = this.dom.getElement("waiting-for-request");
+    const waitingForRequest = this.dom.getElement("waiting-for-request-container");
     if (waitingForRequest) waitingForRequest.style.display = '';
   }
 
@@ -453,7 +453,8 @@ class JWTDecoderApp {
       "i18n-copy-token": ClipboardManager.copyToken,
       "clean-input-button": () => this.cleanInput(),
       "copy-header-button": ClipboardManager.copyHeader,
-      "copy-payload-button": ClipboardManager.copyPayload
+      "copy-payload-button": ClipboardManager.copyPayload,
+      "open-settings": () => this.openSettings()
     };
 
     Object.entries(elementsToHandlerMap).forEach(([id, handler]) => {
@@ -476,6 +477,10 @@ class JWTDecoderApp {
     chrome.storage.local.get(this.config.getOptions(), (options) => {
       this.config.setOptions(options);
     });
+  }
+
+  openSettings(){
+    chrome.runtime.openOptionsPage();
   }
 }
 

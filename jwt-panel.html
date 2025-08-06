@@ -5,7 +5,12 @@
   <script src="jwt-panel.js"></script>
 </head>
 <body>
-  <div id="waiting-for-request" class="card waiting-for-request"></div>
+  <div id="waiting-for-request-container" class="card waiting-for-request">
+    <div id="waiting-for-request"></div>
+    <div>
+      (<b>Header name</b> and <b>Prefix</b> are customizable via <span id="open-settings" style="text-decoration:underline;cursor:pointer;color:blue">extension options</span>)
+    </div>
+  </div>
   <div id="request-captured" class="card">
     <div id="token-captured"></div>
     <div><span class="info-label">Request URL:</span> <span id="request-url" class="info-text"></span></div>
