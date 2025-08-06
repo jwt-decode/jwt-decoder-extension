@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "Jwt dekoderis"
+    "message": "JWT Decoder"
   },
   "shortDesc": {
     "message": "Izmantojiet Jwt dekoderi, ja nezināt, kā dekodēt JWT. Ātra datu dekodēšana ļauj jums pārbaudīt JSON Web Tokenus. Viegli analizējiet JWT prasības."

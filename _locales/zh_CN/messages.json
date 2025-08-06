@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "Jwt 解码器"
+    "message": "JWT Decoder"
   },
   "shortDesc": {
     "message": "如果您不知道如何解码 JWT，请使用 Jwt 解码器。快速数据解码让您可以检查 JSON Web 令牌。轻松解析 JWT 声明。"

@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "מפענח JWT"
+    "message": "JWT Decoder"
   },
   "shortDesc": {
     "message": "השתמשו ב-Jwt Decoder אם אינכם יודעים כיצד לפענח JWT. פענוח נתונים מהיר מאפשר לכם לבדוק אסימוני אינטרנט של JSON. לנתח בקלות תביעות JWT."

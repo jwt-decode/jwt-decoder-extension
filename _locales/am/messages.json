@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "Jwt ዲኮደር"
+    "message": "JWT Decoder"
   },
   "shortDesc": {
     "message": "JWTን እንዴት መፍታት እንደሚችሉ ካላወቁ Jwt Decoder ይጠቀሙ። ፈጣን ዳታ መፍታት JSON Web Tokens እንዲፈትሹ ያስችልዎታል። JWT የይገባኛል ጥያቄዎችን በቀላሉ መተንተን።"

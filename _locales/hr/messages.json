@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "Jwt dekoder"
+    "message": "JWT Decoder"
   },
   "shortDesc": {
     "message": "Koristite Jwt dekoder ako ne znate kako dekodirati JWT. Brzo dekodiranje podataka omogućuje vam provjeru JSON Web Tokena. Lako analizirajte JWT tvrdnje."

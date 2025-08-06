@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "Jwt dekóder"
+    "message": "JWT Decoder"
   },
   "shortDesc": {
     "message": "Használja a Jwt dekódert, ha nem tudja, hogyan kell dekódolni a JWT-t. A gyors adatdekódolás lehetővé teszi, hogy ellenőrizze a JSON Web Tokeneket. Könnyen elemezheti a JWT állításokat."

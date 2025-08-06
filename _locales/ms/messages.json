@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "Penyahkod Jwt"
+    "message": "JWT Decoder"
   },
   "shortDesc": {
     "message": "Gunakan Penyahkod Jwt jika anda tidak tahu bagaimana untuk menyahkod JWT. Penyahkodan data yang pantas membolehkan anda menyemak Token Web JSON. Analisis tuntutan JWT dengan mudah."
