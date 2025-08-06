@@ -143,7 +143,7 @@ class UIRenderer {
    const iatReplaced = this.addHumanreadableTimeClaimTip(json, "iat", "Issued At");
    const expReplaced = this.addHumanreadableTimeClaimTip(iatReplaced, "exp", "Expiration Time");
 
-   return expReplaced.replace(/(\"(.*?)\")(:)/g, (match, p1, p2, p3) => {
+   return expReplaced.replace(/("(.*?)")(:)/g, (match, p1, p2, p3) => {
       return '<span class="json-key">' + p1 + '</span>' + p3;
     });
   }
