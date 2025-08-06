@@ -1,6 +1,6 @@
 {
   "appName": {
-    "message": "Decodificador de JWT - JWT Decoder"
+    "message": "JWT Decoder"
   },
   "shortDesc": {
     "message": "Utiliza Decodificador de Jwt si no sabes cómo decodificar JWT. La decodificación rápida de datos te permite verificar los JSON Web Tokens. Analiza las reclamaciones de JWT fácilmente."
