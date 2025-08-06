@@ -140,19 +140,44 @@ class UIRenderer {
       json = JSON.stringify(json, undefined, 2);
     }
     json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    return json.replace(/(\"(.*?)\")(:)/g, (match, p1, p2, p3) => {
+   const iatReplaced = this.addHumanreadableTimeClaimTip(json, "iat", "Issued At");
+   const expReplaced = this.addHumanreadableTimeClaimTip(iatReplaced, "exp", "Expiration Time");
+
+   return expReplaced.replace(/(\"(.*?)\")(:)/g, (match, p1, p2, p3) => {
       return '<span class="json-key">' + p1 + '</span>' + p3;
     });
   }
 
-  renderDecodedToken(header, payload, url, time) {
+  addHumanreadableTimeClaimTip(jsonStr, claimName, claimMeaning) {
+    const escapedClaim = claimName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`("${escapedClaim}"\\s*:\\s*)(\\d+)`, "g");
+    return jsonStr.replace(
+        regex,
+        (match, key, value) => {
+          const utcString = this.epochToUTCString(value);
+          return (
+              key +
+              `<span style="text-decoration:underline;cursor:pointer;color:blue" title="${claimMeaning}: ${utcString}">` +
+              `${value}</span>`
+          );
+        }
+    );
+  }
+
+  epochToUTCString(epochString) {
+    const epochSeconds = parseInt(epochString, 10);
+    const date = new Date(epochSeconds * 1000);
+    return date.toUTCString();
+  }
+
+  renderDecodedToken(header, payload, source, time) {
     const headerElement = this.dom.getElement("header-json");
     const payloadElement = this.dom.getElement("payload-json");
     
     if (headerElement) headerElement.innerHTML = this.syntaxHighlight(header);
     if (payloadElement) payloadElement.innerHTML = this.syntaxHighlight(payload);
 
-    this.updateRequestInfo(url, time);
+    this.updateRequestInfo(source, time);
     // this.hideWaitingMessage();
   }
 
