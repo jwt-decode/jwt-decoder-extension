@@ -257,7 +257,9 @@ class UIRenderer {
       payloadButton.dataset.payload = JSON.stringify(payload);
       payloadButton.disabled = false;
     }
+  }
 
+  updateCleanButton(){
     // Update clean input button
     const cleanButton = this.dom.getElement("clean-input-button");
     if (cleanButton) cleanButton.disabled = false;
@@ -371,6 +373,7 @@ class JWTDecoderApp {
     if (!validation.valid) {
       this.renderer.setTokenInputState(tokenInput, 'error');
       this.showError(validation.error);
+      this.renderer.updateCleanButton();
       return;
     }
 
@@ -378,6 +381,7 @@ class JWTDecoderApp {
     if (!result.success) {
       this.renderer.setTokenInputState(tokenInput, 'error');
       this.showError(result.error);
+      this.renderer.updateCleanButton();
       return;
     }
 
@@ -396,6 +400,7 @@ class JWTDecoderApp {
     this.renderer.hideWaitingMessage();
     this.renderer.renderDecodedToken(header, payload, source, time);
     this.renderer.updateCopyButtons(header, payload, token, prefix);
+    this.renderer.updateCleanButton();
   }
 
   showError(message) {
@@ -462,11 +467,13 @@ class JWTDecoderApp {
       if (element) element.onclick = handler;
     });
 
+
     // Set up token input listeners
     const tokenInput = this.domCache.getElement("token-input");
     if (tokenInput) {
       tokenInput.addEventListener('input', () => this.handleManualTokenInput());
       tokenInput.addEventListener('paste', () => this.handleManualTokenInput());
+      tokenInput.addEventListener('focus', () => tokenInput.select());
     }
 
     // Initialize UI state
