@@ -1,7 +1,7 @@
 {
   "name": "__MSG_appName__",
   "short_name": "JWT",
-  "version": "1.0",
+  "version": "1.1",
   "description": "__MSG_shortDesc__",
   "homepage_url": "https://jwt-decode.github.io/jwt-decoder/",
   "icons": {
