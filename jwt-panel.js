@@ -369,6 +369,26 @@ class JWTDecoderApp {
       return;
     }
 
+    this.processExtractedToken(extracted, tokenInput, 'Manual input', new Date().toLocaleString());
+  }
+
+  onRequestFinished(request) {
+    const config = this.config.getOptions();
+    let extracted = null;
+    
+    // Find and extract token in a single pass
+    for (const header of request.request.headers) {
+      extracted = JWTProcessor.extractBearerToken(header, config);
+      if (extracted) break;
+    }
+    
+    if (!extracted) return;
+    const tokenInput = this.domCache.getElement('token-input');
+    tokenInput.value = extracted.token;
+    this.processExtractedToken(extracted, tokenInput, request.request.url, request.startedDateTime);
+  }
+
+  processExtractedToken(extracted, tokenInput, source, time) {
     const validation = JWTProcessor.validateToken(extracted.token);
     if (!validation.valid) {
       this.renderer.setTokenInputState(tokenInput, 'error');
@@ -390,8 +410,8 @@ class JWTDecoderApp {
       result.header, 
       result.payload, 
       validation.token, 
-      'Manual input', 
-      new Date().toLocaleString(),
+      source, 
+      time,
       extracted.prefix
     );
   }
@@ -416,41 +436,6 @@ class JWTDecoderApp {
     EventManager.triggerInputEvent(tokenInput);
   }
 
-  onRequestFinished(request) {
-    const config = this.config.getOptions();
-    const bearerToken = request.request.headers.find(header => 
-      JWTProcessor.extractBearerToken(header, config)
-    );
-    
-    if (!bearerToken) return;
-
-    const extracted = JWTProcessor.extractBearerToken(bearerToken, config);
-    if (!extracted) return;
-
-    try {
-      const result = JWTProcessor.decodeToken(extracted.token);
-      if (!result.success) return;
-
-      const tokenInput = this.domCache.getElement('token-input');
-      if (tokenInput) {
-        tokenInput.dataset.requestUrl = request.request.url;
-        tokenInput.dataset.reqTime = request.startedDateTime;
-        tokenInput.value = extracted.token;
-        EventManager.triggerInputEvent(tokenInput);
-      }
-
-      this.displayDecodedToken(
-        result.header, 
-        result.payload, 
-        extracted.token, 
-        request.request.url, 
-        request.startedDateTime, 
-        extracted.prefix
-      );
-    } catch (error) {
-      // Not a token we can extract and decode
-    }
-  }
 
   initialize() {
     // Set up event listeners
