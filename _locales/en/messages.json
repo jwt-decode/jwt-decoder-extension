@@ -23,6 +23,9 @@
     "copyPrefixLabel": {
         "message": "Copy prefix to clipboard"
     },
+    "allowEmptyPrefixLabel": {
+        "message": "Allow tokens without prefix"
+    },
     "saveButton": {
         "message": "Save"
     },

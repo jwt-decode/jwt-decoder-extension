@@ -4,7 +4,8 @@ class JWTConfig {
     this.options = {
       header_name: "authorization",
       header_prefix: ["Bearer "],
-      copy_prefix: false
+      copy_prefix: false,
+      allow_empty_prefix: false
     };
   }
 
@@ -14,6 +15,9 @@ class JWTConfig {
       ? newOptions.header_prefix.split(',') 
       : newOptions.header_prefix;
     this.options.copy_prefix = newOptions.copy_prefix;
+    this.options.allow_empty_prefix = newOptions.allow_empty_prefix !== undefined 
+      ? newOptions.allow_empty_prefix 
+      : false;
     
     // Ensure prefixes end with space
     this.options.header_prefix = this.options.header_prefix.map(prefix => {
@@ -27,10 +31,14 @@ class JWTConfig {
   updateWaitingMessage(headerName) {
     const waitingForRequest = document.getElementById("waiting-for-request");
     if (!waitingForRequest) return;
-
-    const prefixDisplay = this.options.header_prefix.length > 1 
-      ? '{' + this.options.header_prefix.join() + "}" 
-      : this.options.header_prefix[0];
+    const trimmedPrefisex = this.options.header_prefix.map(prefix=> prefix.trim())
+    let prefixDisplay = this.options.header_prefix.length > 1 
+      ? '{' + trimmedPrefisex.join(", ") + "}" 
+      : this.options.header_prefix[0].trim();
+    
+    if (this.options.allow_empty_prefix) {
+      prefixDisplay += " or no prefix";
+    }
 
     waitingForRequest.innerHTML = chrome.i18n.getMessage(
       "waitingForRequest",
@@ -98,12 +106,22 @@ class JWTProcessor {
     if (header.name.toLowerCase() !== config.header_name) return null;
     
     const prefix = config.header_prefix.find(p => header.value.startsWith(p));
-    if (!prefix) return null;
+    if (prefix) {
+      return { 
+        prefix, 
+        token: header.value.substring(prefix.length) 
+      };
+    }
     
-    return { 
-      prefix, 
-      token: header.value.substring(prefix.length) 
-    };
+    // If no prefix matches and allow_empty_prefix is enabled, treat entire header value as token
+    if (config.allow_empty_prefix) {
+      return {
+        prefix: '',
+        token: header.value
+      };
+    }
+    
+    return null;
   }
 
   static extractTokenFromInput(input, config) {
