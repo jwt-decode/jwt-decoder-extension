@@ -92,7 +92,7 @@ class JWTProcessor {
     }
   }
 
-  static extractBearerToken(header, config) {
+  static extractTokenFromHeader(header, config) {
     if (!header || !header.name || !header.value) return null;
     
     if (header.name.toLowerCase() !== config.header_name) return null;
@@ -378,7 +378,7 @@ class JWTDecoderApp {
     
     // Find and extract token in a single pass
     for (const header of request.request.headers) {
-      extracted = JWTProcessor.extractBearerToken(header, config);
+      extracted = JWTProcessor.extractTokenFromHeader(header, config);
       if (extracted) break;
     }
     
