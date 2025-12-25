@@ -14,6 +14,8 @@
   border-radius: 6px;
   /* font-weight: bold; */
   color: #d48806;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .section-title {
@@ -88,7 +90,34 @@ pre {
   padding: 0.1em 0.3em;
   border-radius: 4px;
   color: #1565c0;
+  max-width: 500px;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: middle;
   word-break: break-all;
+}
+.info-text.expanded {
+  white-space: normal;
+  word-break: break-all;
+  max-width: 100%;
+  display: block;
+  overflow: visible;
+}
+.info-expander {
+  color: #1976d2;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 0.2em;
+  text-decoration: underline;
+  user-select: none;
+}
+.info-expander:hover {
+  color: #1565c0;
+}
+#request-captured {
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .json-key {
