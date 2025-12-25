@@ -205,9 +205,79 @@ class UIRenderer {
     const reqTime = this.dom.getElement("request-time");
     
     if (reqCaptured && reqUrl && reqTime) {
-      reqUrl.textContent = url;
-      reqTime.textContent = time;
+      // Clear any existing expanders
+      const existingUrlExpander = reqUrl.parentElement.querySelector('.info-expander[data-for="url"]');
+      const existingTimeExpander = reqTime.parentElement.querySelector('.info-expander[data-for="time"]');
+      if (existingUrlExpander) existingUrlExpander.remove();
+      if (existingTimeExpander) existingTimeExpander.remove();
+      
+      // Reset classes
+      reqUrl.classList.remove('expanded');
+      reqUrl.classList.remove('is-truncated');
+      reqTime.classList.remove('expanded');
+      reqTime.classList.remove('is-truncated');
+      
+      // Set full text and truncate if needed
+      this.setTruncatedText(reqUrl, url, 'url');
+      reqTime.textContent = time
+      
       reqCaptured.style.display = '';
+    }
+  }
+
+  setTruncatedText(element, fullText, identifier) {
+    const maxLength = 80; // Maximum characters before truncation
+    
+    if (!fullText) {
+      element.textContent = '';
+      element.classList.remove('is-truncated');
+      return;
+    }
+    
+    // Store full text in data attribute
+    element.dataset.fullText = fullText;
+    
+    if (fullText.length <= maxLength) {
+      element.textContent = fullText;
+      element.classList.remove('is-truncated');
+      return;
+    }
+    
+    // Truncate and add expander
+    const truncated = fullText.substring(0, maxLength);
+    element.textContent = truncated;
+    element.classList.add('is-truncated');
+    
+    // Create expander element
+    const expander = document.createElement('span');
+    expander.className = 'info-expander';
+    expander.textContent = '...';
+    expander.dataset.for = identifier;
+    expander.onclick = (e) => {
+      e.stopPropagation();
+      this.toggleTextExpansion(element, expander);
+    };
+    
+    // Insert expander after the text element
+    element.parentElement.insertBefore(expander, element.nextSibling);
+  }
+
+  toggleTextExpansion(element, expander) {
+    const isExpanded = element.classList.contains('expanded');
+    
+    if (isExpanded) {
+      // Collapse: show truncated version
+      const fullText = element.dataset.fullText;
+      const maxLength = 80;
+      const truncated = fullText.substring(0, maxLength);
+      element.textContent = truncated;
+      element.classList.remove('expanded');
+      expander.textContent = '...';
+    } else {
+      // Expand: show full text
+      element.textContent = element.dataset.fullText;
+      element.classList.add('expanded');
+      expander.textContent = ' [hide]';
     }
   }
 
