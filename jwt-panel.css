@@ -92,10 +92,14 @@ pre {
   color: #1565c0;
   max-width: 500px;
   display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
+  overflow: visible;
+  white-space: normal;
   vertical-align: middle;
   word-break: break-all;
+}
+.info-text.is-truncated {
+  overflow: hidden;
+  white-space: nowrap;
 }
 .info-text.expanded {
   white-space: normal;

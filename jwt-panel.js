@@ -195,7 +195,9 @@ class UIRenderer {
       
       // Reset classes
       reqUrl.classList.remove('expanded');
+      reqUrl.classList.remove('is-truncated');
       reqTime.classList.remove('expanded');
+      reqTime.classList.remove('is-truncated');
       
       // Set full text and truncate if needed
       this.setTruncatedText(reqUrl, url, 'url');
@@ -210,6 +212,7 @@ class UIRenderer {
     
     if (!fullText) {
       element.textContent = '';
+      element.classList.remove('is-truncated');
       return;
     }
     
@@ -218,12 +221,14 @@ class UIRenderer {
     
     if (fullText.length <= maxLength) {
       element.textContent = fullText;
+      element.classList.remove('is-truncated');
       return;
     }
     
     // Truncate and add expander
     const truncated = fullText.substring(0, maxLength);
     element.textContent = truncated;
+    element.classList.add('is-truncated');
     
     // Create expander element
     const expander = document.createElement('span');
