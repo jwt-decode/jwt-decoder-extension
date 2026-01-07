@@ -1,5 +1,5 @@
 // Saves options to chrome.storage
-function save_options() {
+export function saveOptions() {
   var header_name = document.getElementById('header_name').value;
   var header_prefix = document.getElementById('header_prefix').value;
   var copy_prefix = document.getElementById('copy_prefix').checked;
@@ -19,7 +19,7 @@ function save_options() {
   });
 }
 
-function restore_options() {
+export function restoreOptions() {
   chrome.storage.local.get({
     header_name: "Authorization",
     header_prefix: "Bearer",
@@ -34,15 +34,15 @@ function restore_options() {
 }
 
 // Resets options to default values
-function reset_options() {
+export function resetOptions() {
   document.getElementById('header_name').value = "Authorization";
   document.getElementById('header_prefix').value = "Bearer";
   document.getElementById('copy_prefix').checked = false;
   document.getElementById('allow_empty_prefix').checked = false;
-  save_options();
+  saveOptions();
 }
 
-function i18n_messages(){
+export function i18nMessages() {
   document.title = chrome.i18n.getMessage("optionsTitle");
   document.getElementById('i18n-title').textContent = chrome.i18n.getMessage("optionsTitle");
   document.getElementById('i18n-header-name-label').textContent = chrome.i18n.getMessage("headerNameLabel");
@@ -54,8 +54,19 @@ function i18n_messages(){
   document.getElementById('i18n-reset').textContent = chrome.i18n.getMessage("resetButton");
 }
 
-document.addEventListener('DOMContentLoaded', restore_options);
-document.addEventListener('DOMContentLoaded', i18n_messages);
-document.getElementById('i18n-save').addEventListener('click', save_options);
-document.getElementById('i18n-reset').addEventListener('click', reset_options);
+export function initializeOptions() {
+  document.addEventListener('DOMContentLoaded', () => {
+    restoreOptions();
+    i18nMessages();
 
+    const saveButton = document.getElementById('i18n-save');
+    const resetButton = document.getElementById('i18n-reset');
+
+    if (saveButton) saveButton.addEventListener('click', saveOptions);
+    if (resetButton) resetButton.addEventListener('click', resetOptions);
+  });
+}
+
+if (typeof chrome !== 'undefined' && chrome?.storage && typeof document !== 'undefined') {
+  initializeOptions();
+}

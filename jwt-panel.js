@@ -1,5 +1,7 @@
+import { Encoder } from './encoder.js';
+
 // Configuration and state management
-class JWTConfig {
+export class JWTConfig {
   constructor() {
     this.options = {
       header_name: "authorization",
@@ -52,7 +54,7 @@ class JWTConfig {
 }
 
 // DOM element cache and management
-class DOMCache {
+export class DOMCache {
   constructor() {
     this.elements = new Map();
   }
@@ -70,7 +72,7 @@ class DOMCache {
 }
 
 // JWT Token processing utilities
-class JWTProcessor {
+export class JWTProcessor {
   static validateToken(token) {
     if (!token || typeof token !== 'string') {
       return { valid: false, error: 'Invalid token format' };
@@ -148,9 +150,10 @@ class JWTProcessor {
 }
 
 // UI rendering and display management
-class UIRenderer {
-  constructor(domCache) {
+export class UIRenderer {
+  constructor(domCache, config) {
     this.dom = domCache;
+    this.config = config;
   }
 
   syntaxHighlight(json) {
@@ -323,7 +326,7 @@ class UIRenderer {
   }
 
   updateCopyButtons(header, payload, token, prefix = '') {
-    const config = jwtConfig.getOptions();
+    const config = this.config.getOptions();
     
     // Update token copy button
     const tokenButton = this.dom.getElement("i18n-copy-token");
@@ -381,7 +384,7 @@ class UIRenderer {
 }
 
 // Clipboard operations
-class ClipboardManager {
+export class ClipboardManager {
   static copyToClipboard(text) {
     const copyFrom = document.createElement("textarea");
     copyFrom.textContent = text;
@@ -409,7 +412,7 @@ class ClipboardManager {
 }
 
 // Event handling utilities
-class EventManager {
+export class EventManager {
   static createInputEvent(data = "") {
     return new InputEvent('input', {
       bubbles: true,
@@ -428,11 +431,11 @@ class EventManager {
 }
 
 // Main application controller
-class JWTDecoderApp {
+export class JWTDecoderApp {
   constructor(config) {
     this.config = config;
     this.domCache = new DOMCache();
-    this.renderer = new UIRenderer(this.domCache);
+    this.renderer = new UIRenderer(this.domCache, this.config);
   }
 
   handleManualTokenInput() {
@@ -564,25 +567,29 @@ class JWTDecoderApp {
   }
 }
 
-// Initialize application
-const jwtConfig = new JWTConfig();
-const app = new JWTDecoderApp(jwtConfig);
+export function initializeJwtPanel() {
+  const jwtConfig = new JWTConfig();
+  const app = new JWTDecoderApp(jwtConfig);
 
-// Event listeners
-document.addEventListener('DOMContentLoaded', () => {
-  app.renderer.initializeI18n();
-});
-
-chrome.devtools.network.onRequestFinished.addListener((request) => {
-  app.onRequestFinished(request);
-});
-
-window.onload = () => {
-  app.initialize();
-};
-
-chrome.storage.onChanged.addListener((changes, namespace) => {
-  chrome.storage.local.get(jwtConfig.getOptions(), (options) => {
-    jwtConfig.setOptions(options);
+  document.addEventListener('DOMContentLoaded', () => {
+    app.renderer.initializeI18n();
   });
-});
+
+  chrome.devtools.network.onRequestFinished.addListener((request) => {
+    app.onRequestFinished(request);
+  });
+
+  window.onload = () => {
+    app.initialize();
+  };
+
+  chrome.storage.onChanged.addListener(() => {
+    chrome.storage.local.get(jwtConfig.getOptions(), (options) => {
+      jwtConfig.setOptions(options);
+    });
+  });
+}
+
+if (typeof chrome !== 'undefined' && chrome?.devtools?.network && typeof document !== 'undefined') {
+  initializeJwtPanel();
+}
