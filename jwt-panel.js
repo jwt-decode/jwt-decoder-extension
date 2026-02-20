@@ -33,11 +33,21 @@ export class JWTConfig {
   updateWaitingMessage(headerName) {
     const waitingForRequest = document.getElementById("waiting-for-request");
     if (!waitingForRequest) return;
-    const trimmedPrefisex = this.options.header_prefix.map(prefix=> prefix.trim())
-    let prefixDisplay = this.options.header_prefix.length > 1 
-      ? '{' + trimmedPrefisex.join(", ") + "}" 
-      : this.options.header_prefix[0].trim();
-    
+    const trimmedPrefixes = this.options.header_prefix.map(prefix => prefix.trim());
+    const nonEmptyPrefixes = trimmedPrefixes.filter(prefix => prefix.length > 0);
+
+    if (this.options.allow_empty_prefix && nonEmptyPrefixes.length === 0) {
+      waitingForRequest.innerHTML = chrome.i18n.getMessage(
+        "waitingForRequestNoPrefix",
+        [Encoder.htmlEncode(headerName)]
+      );
+      return;
+    }
+
+    let prefixDisplay = nonEmptyPrefixes.length > 1
+      ? `{${nonEmptyPrefixes.join(", ")}}`
+      : (nonEmptyPrefixes[0] || "");
+
     if (this.options.allow_empty_prefix) {
       prefixDisplay += " or no prefix";
     }

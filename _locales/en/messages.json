@@ -41,6 +41,9 @@
     "waitingForRequest": {
         "message": "🔄Waiting for your request with  header <b>$1</b> and prefix <b>$2</b>."
     },
+    "waitingForRequestNoPrefix": {
+        "message": "🔄Waiting for your request with header <b>$1</b> and <b>no prefix</b>."
+    },
     "tokenCaptured": {
         "message": "✅ <b>Token captured successfully!</b>"
     },
