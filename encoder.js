@@ -27,7 +27,7 @@
  *		 - replaced string concatonation in numEncode with string builder, push and join for peformance with ammendments by Rob Reid
  */
 
-Encoder = {
+const Encoder = {
 
 	// When encoding do we convert characters into html or numerical entities
 	EncodeType : "entity",  // entity OR numerical
@@ -240,4 +240,6 @@ Encoder = {
 		return -1;
 	}
 
-}
+};
+
+export { Encoder };
